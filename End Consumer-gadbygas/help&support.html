@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback and Support</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #ff6f61;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 35px;
+            box-shadow: 3px 3px 3px yellow;
+        }
+
+        .navbar .logo span {
+            color: yellow;
+            font-size: 40px;
+            font-style: italic;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .person {
+            height: 40px;
+            margin-top: -6px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero-support {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            padding: 5px 5px;
+        }
+
+        .hero-support h3 {
+            font-size: 2.5rem;
+        }
+
+        .hero-support p {
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Main Section */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #ff6f61;
+            text-align: center;
+        }
+
+        h3{
+            padding-top: 20px;
+        }
+
+        .support-details {
+            margin-bottom: 30px;
+        }
+
+        .support-details h3 {
+            margin-top: 15px;
+            color: #0056b3;
+        }
+
+        .support-details p {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .modal .cancel-btn:hover {
+            background: #bbb;
+        }
+
+        .modal .confirm-btn {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .modal .confirm-btn:hover {
+            background: #e65a50;
+        }
+
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        .footer {
+        background-color: #0056b3;
+        color: white;
+        text-align: center;
+        padding: 20px 10px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpeg" alt="logo">
+            <span>G</span>asBy<span>G</span>as
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gas_register.html">Request Gas</a></li>
+            <li><a href="notification.html">Notifications</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="token_management.html">Token Management</a></li>
+            <li><a href="help&support.html">Help&Support</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+            <li><a href="profile_management.html"><img class="person" src="images/man.png" alt=""></a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-support">
+        <h1>Feedback and Support</h1>
+        <p>We're here to help. Contact us or share your feedback below.</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="support-details">
+            <h2>Contact Information</h2>
+            <h3>Outlet Manager</h3>
+            <p>Phone: +1-234-567-890</p>
+            <p>Email: outlet.manager@gasbygas.com</p>
+
+            <h3>Head Office</h3>
+            <p>Phone: +1-234-567-891</p>
+            <p>Email: headoffice@gasbygas.com</p>
+
+            <h3>Support Hotlines</h3>
+            <p>General Inquiries: +1-800-555-1234</p>
+            <p>Technical Support: +1-800-555-5678</p>
+            <p>Payment Issues: +1-800-555-9101</p>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logout-modal">
+        <div class="modal">
+            <h2>Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancel-logout">Cancel</button>
+                <button class="confirm-btn" id="confirm-logout">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+            //logout
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogout = document.getElementById('cancel-logout');
+    const confirmLogout = document.getElementById('confirm-logout');
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutModal.classList.add('active');
+    });
+
+    cancelLogout.addEventListener('click', () => {
+        logoutModal.classList.remove('active');
+    });
+
+    confirmLogout.addEventListener('click', () => {
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+    </script>
+
+</body>
+</html>
+

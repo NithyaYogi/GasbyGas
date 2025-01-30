@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - GasByGas</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Privacy Policy Container */
+        .privacy-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-container h2 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        /* Links */
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Privacy Policy</h1>
+    </header>
+    <main class="privacy-container">
+        <section>
+            <h2>Introduction</h2>
+            <p>At GasByGas, we value your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information when using our services.</p>
+        </section>
+        <section>
+            <h2>Information We Collect</h2>
+            <ul>
+                <li>Personal details (e.g., name, NIC, email, phone number).</li>
+                <li>Location and transaction data for service delivery.</li>
+                <li>Technical data such as IP addresses for security purposes.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>How We Use Your Information</h2>
+            <p>We use your information to process gas requests, manage deliveries, improve our services, and communicate updates.</p>
+        </section>
+        <section>
+            <h2>Security</h2>
+            <p>Your data is securely stored and protected with industry-standard measures to prevent unauthorized access.</p>
+        </section>
+        <section>
+            <h2>Your Rights</h2>
+            <p>You have the right to access, modify, or delete your personal information. Contact us for assistance.</p>
+        </section>
+        <section>
+            <h2>Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, reach out to us at <a href="mailto:privacy@gasbygas.com">privacy@gasbygas.com</a>.</p>
+        </section>
+    </main>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logout-modal">
+        <div class="modal">
+            <h2>Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div class="modal-buttons">
+                <button class="cancel-btn" id="cancel-logout">Cancel</button>
+                <button class="confirm-btn" id="confirm-logout">Logout</button>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for section navigation (if needed)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+    </script>
+</body>
+</html>

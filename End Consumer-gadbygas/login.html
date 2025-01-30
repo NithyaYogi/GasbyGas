@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+    /* General Styling */
+       body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Navbar styles */
+    .navbar {
+    background-color: #ff6f61;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+  }
+  .navbar .logo img{
+    height: 35px;
+    box-shadow: 3px 3px 3px yellow;
+  }
+
+  .navbar .logo span{
+    color: yellow;
+    font-size: 40px;
+    font-style:italic;
+  }
+  
+  .navbar .nav-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar .nav-links li {
+    margin-left: 1.5rem;
+  }
+   
+  .person{
+    height: 40px;
+    margin-top: -6px;
+  }
+  
+  .navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+  }
+
+  /* Login Form Section */
+
+  .navbar .title{
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+    font-weight: bold;
+  }
+ .login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px);
+  }
+  
+  .login-container {
+    background-color: white;
+    padding: 30px 45px 30px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border: 1px solid #ff6f61 ;
+    width: 400px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff6f61;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .input-group input {
+    width: 95%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  .input-group input:focus {
+    border-color: #ff6f61;
+  }
+  input:hover{
+            box-shadow: 5px 5px 5px rgba(121, 33, 33, 0.2);
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .btn:hover {
+    background-color: #be2222;
+  }
+  
+  .links {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .links a {
+    color: #4e9ae7;
+    text-decoration: none;
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+    </style>
+    
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpeg" alt="logo">
+            <span>G</span>asBy<span>G</span>as
+        </div>
+        <div class="title">
+            End Consumer Login
+        </div>
+        
+    </nav>
+
+
+    <!-- Login Form Section -->
+    <section class="login-section">
+        <div class="login-container">
+            <h2>Login </h2>
+            <form id="loginForm" action="index.html" method="POST">
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" placeholder="Enter your email address" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="links">
+                    <a href="forgot-password.html">Forgot Password?</a>
+                    <p>Don't have an account? <a href="registraion.html">Register here</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();  // Prevent form from submitting to demonstrate functionality
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Here you could implement your backend validation (e.g., checking against a database)
+            if (email && password) {
+                alert('Login successful!');
+                // Redirect to user homepage
+                window.location.href = 'index.html';  // Example of redirection after successful login
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+    </script>
+ 
+</body>
+</html>

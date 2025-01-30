@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #ff6f61;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 35px;
+            box-shadow: 3px 3px 3px yellow;
+        }
+
+        .navbar .logo span {
+            color: yellow;
+            font-size: 40px;
+            font-style: italic;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .person {
+            height: 40px;
+            margin-top: -6px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .search{
+            height: 20px;
+            padding-right: -50px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6f61;
+            padding-bottom: 25px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            gap: 10px;
+        }
+
+        .filters button {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .filters button.active {
+            background-color: #0072ff;
+            color: #fff;
+        }
+
+        .filters button:not(.active) {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .filters input {
+            flex: 2;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .notification {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .notification.unread {
+            background-color: #f0f8ff;
+        }
+
+        .notification .details {
+            flex-grow: 1;
+            margin-right: 1rem;
+        }
+
+        .notification button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        .notification button.read {
+            background: #0072ff;
+            color: #fff;
+        }
+
+        .notification button.delete {
+            background: #ff4d4d;
+            color: #fff;
+        }
+
+        .preferences {
+            margin-top: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .preferences label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .modal .cancel-btn:hover {
+            background: #bbb;
+        }
+
+        .modal .confirm-btn {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .modal .confirm-btn:hover {
+            background: #e65a50;
+        }
+
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        /* Footer */
+        .footer {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpeg" alt="logo">
+            <span>G</span>asBy<span>G</span>as
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gas_register.html">Request Gas</a></li>
+            <li><a href="notification.html">Notifications</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="token_management.html">Token Management</a></li>
+            <li><a href="help&support.html">Help&Support</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+            <li><a href="profile_management.html"><img class="person" src="images/man.png" alt=""></a></li>
+        </ul>
+    </nav>
+
+<div class="container">
+    <h1>Notifications</h1>
+    <div class="filters">
+        <button id="allButton" class="active" onclick="filterNotifications('all')">All</button>
+        <button id="unreadButton" onclick="filterNotifications('unread')">Unread</button>
+        <button id="readButton" onclick="filterNotifications('read')">Read</button>
+        <input type="text" id="search" placeholder="Search notifications..."  oninput="searchNotifications()"><img class="search" src="images/search.png" alt="">
+    </div>
+
+    <div id="notificationList">
+        <!-- Notifications will be dynamically loaded here -->
+    </div>
+
+    <div class="preferences">
+        <h3>Notification Preferences</h3>
+        <label><input type="checkbox" id="enableSMS" checked> Enable SMS Notifications</label>
+        <label><input type="checkbox" id="enableEmail" checked> Enable Email Notifications</label>
+    </div>
+</div>
+<!-- Logout Confirmation Modal -->
+<div class="modal-overlay" id="logout-modal">
+    <div class="modal">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to log out?</p>
+        <div class="modal-buttons">
+            <button class="cancel-btn" id="cancel-logout">Cancel</button>
+            <button class="confirm-btn" id="confirm-logout">Logout</button>
+        </div>
+    </div>
+</div>
+
+[<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+</footer>]
+
+<script>
+    //logout
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogout = document.getElementById('cancel-logout');
+    const confirmLogout = document.getElementById('confirm-logout');
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutModal.classList.add('active');
+    });
+
+    cancelLogout.addEventListener('click', () => {
+        logoutModal.classList.remove('active');
+    });
+
+    confirmLogout.addEventListener('click', () => {
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+
+    const notifications = [
+    { id: 1, title: 'Stock Availability Alert', message: 'Gas cylinders are now available at Colombo Outlet.', status: 'unread' },
+        { id: 2, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'read' },
+        { id: 3, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'unread' },
+        { id: 4, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'read' },
+        { id: 5, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'unread' },
+        { id: 6, title: 'System Maintenance', message: 'Scheduled maintenance on 25th Jan 2025.', status: 'read' },
+        { id: 7, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'unread' },
+        { id: 8, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'unread' },
+        { id: 9, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'read' },
+        { id: 10, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'unread' },
+        { id: 11, title: 'Stock Availability Alert', message: 'Gas cylinders are now available at Galle Outlet.', status: 'read' },
+        { id: 12, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'unread' },
+        { id: 13, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'read' },
+        { id: 14, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'unread' },
+        { id: 15, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'read' },
+        { id: 16, title: 'System Maintenance', message: 'Scheduled maintenance on 25th Jan 2025.', status: 'unread' },
+        { id: 17, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'unread' },
+        { id: 18, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'unread' },
+        { id: 19, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'read' },
+        { id: 20, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'unread' },
+        { id: 21, title: 'Stock Availability Alert', message: 'Gas cylinders are now available at Kandy Outlet.', status: 'read' },
+        { id: 22, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'unread' },
+        { id: 23, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'read' },
+        { id: 24, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'unread' },
+        { id: 25, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'read' },
+        { id: 26, title: 'System Maintenance', message: 'Scheduled maintenance on 25th Jan 2025.', status: 'unread' },
+        { id: 27, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'unread' },
+        { id: 28, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'unread' },
+        { id: 29, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'read' },
+        { id: 30, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'unread' },
+        { id: 31, title: 'Stock Availability Alert', message: 'Gas cylinders are now available at Colombo Outlet.', status: 'unread' },
+        { id: 32, title: 'Delivery Confirmation', message: 'Your gas cylinder is ready for pickup.', status: 'read' },
+        { id: 33, title: 'Pickup Reminder', message: 'Remember to pick up your gas cylinder tomorrow.', status: 'unread' },
+        { id: 34, title: 'Cancellation Alert', message: 'Your request has been canceled due to unavailability.', status: 'unread' },
+        { id: 35, title: 'Reallocation Notice', message: 'Your request has been reallocated to another customer.', status: 'read' }
+    ];
+
+    let currentFilter = 'all';
+    let searchTerm = '';
+
+    function loadNotifications() {
+        const notificationList = document.getElementById('notificationList');
+        notificationList.innerHTML = '';
+
+        const filteredNotifications = notifications.filter(notification => {
+            const matchesFilter = currentFilter === 'all' || notification.status === currentFilter;
+            const matchesSearch = notification.title.toLowerCase().includes(searchTerm) || notification.message.toLowerCase().includes(searchTerm);
+            return matchesFilter && matchesSearch;
+        });
+
+        filteredNotifications.forEach(notification => {
+            const div = document.createElement('div');
+            div.className = `notification ${notification.status}`;
+
+            div.innerHTML = `
+                <div class="details">
+                    <strong>${notification.title}</strong>
+                    <p>${notification.message}</p>
+                </div>
+                <div>
+                    ${notification.status === 'unread' 
+                        ? `<button class="read" onclick="markAsRead(${notification.id})">Mark as Read</button>` 
+                        : ''}
+                    <button class="delete" onclick="deleteNotification(${notification.id})">Delete</button>
+                </div>
+            `;
+
+            notificationList.appendChild(div);
+        });
+    }
+
+    function filterNotifications(filter) {
+        currentFilter = filter;
+        document.querySelectorAll('.filters button').forEach(button => {
+            button.classList.remove('active');
+        });
+        document.getElementById(`${filter}Button`).classList.add('active');
+        loadNotifications();
+    }
+
+    function searchNotifications() {
+        searchTerm = document.getElementById('search').value.toLowerCase();
+        loadNotifications();
+    }
+
+    function markAsRead(id) {
+        const notification = notifications.find(n => n.id === id);
+        if (notification) {
+            notification.status = 'read';
+            alert(`Notification "${notification.title}" marked as read.`);
+            loadNotifications();
+        }
+    }
+
+    function deleteNotification(id) {
+        const index = notifications.findIndex(n => n.id === id);
+        if (index > -1) {
+            const notification = notifications[index];
+            notifications.splice(index, 1);
+            alert(`Notification "${notification.title}" deleted.`);
+            loadNotifications();
+        }
+    }
+
+    loadNotifications();
+</script>
+
+</body>
+</html>
+
+
+
+

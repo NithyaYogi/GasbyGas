@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>End Consumer Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f54e42, #ee96d8);
+            color: #333;
+        }
+        .navbar {
+            color: #fff;
+            background-color: black;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 28px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem 3rem 2rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ff6f61;
+        }
+        h1 {
+            text-align: center;
+            color: #f85748;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        input {
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 10px;
+        }
+        input:focus {
+            border-color: #7c1c14;
+            outline: none;
+        }
+        input:hover {
+            box-shadow: 5px 5px 5px rgba(245, 84, 84, 0.2);
+        }
+
+        button {
+            padding: 0.8rem;
+            background: #ff6f61;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #f7402f;
+        }
+
+        .link_accont {
+            text-align: center;
+            display: inline;
+        }
+        .link_accont a {
+            text-decoration: none;
+        }
+        .error {
+            color: rgb(245, 21, 21);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">
+        End Consumer
+    </div>
+</div>
+
+<div class="container">
+    <h1>Sign Up</h1>
+    <form id="registrationForm">
+        <div>
+            <label for="firstName">First Name</label><br>
+            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+            <p class="error" id="firstNameError"></p>
+        </div>
+        <div>
+            <label for="lastName">Last Name</label><br>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+            <p class="error" id="lastNameError"></p>
+        </div>
+        <div>
+            <label for="phone">Phone Number</label><br>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+            <p class="error" id="phoneError"></p>
+        </div>
+        <div>
+            <label for="email">Email Address</label><br>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            <p class="error" id="emailError"></p>
+        </div>
+        <div>
+            <label for="address">Address</label><br>
+            <input type="text" id="address" name="address" placeholder="Enter your address" required>
+            <p class="error" id="addressError"></p>
+        </div>
+        <div>
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" placeholder="Enter the password" required>
+            <p class="error" id="passwordError"></p>
+        </div>
+        <div>
+            <label for="confirmPassword">Confirm Password</label><br>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm the password" required>
+            <p class="error" id="confirmPasswordError"></p>
+        </div>
+        <button type="submit">Submit</button>
+        <div class="link_accont">
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('registrationForm');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Clear previous error messages
+        document.querySelectorAll('.error').forEach(error => error.textContent = '');
+
+        let hasError = false;
+
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Validate First Name
+        if (firstName.trim() === '') {
+            document.getElementById('firstNameError').textContent = 'First Name is required';
+            hasError = true;
+        }
+
+        // Validate Last Name
+        if (lastName.trim() === '') {
+            document.getElementById('lastNameError').textContent = 'Last Name is required';
+            hasError = true;
+        }
+
+        // Validate Phone
+        if (!/^[0-9]{10}$/.test(phone)) {
+            document.getElementById('phoneError').textContent = 'Phone number must be 10 digits';
+            hasError = true;
+        }
+
+        // Validate Email
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document.getElementById('emailError').textContent = 'Invalid email address';
+            hasError = true;
+        }
+
+        // Validate Address
+        if (address.trim() === '') {
+            document.getElementById('addressError').textContent = 'Address is required';
+            hasError = true;
+        }
+
+        // Validate Password
+        if (password.length < 6) {
+            document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+            hasError = true;
+        }
+
+        // Validate Confirm Password
+        if (password !== confirmPassword) {
+            document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+            hasError = true;
+        }
+
+        if (!hasError) {
+            alert('Registration successful!');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000); // 2-second delay before redirecting
+        }
+    });
+</script>
+
+</body>
+</html>
+

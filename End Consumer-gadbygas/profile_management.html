@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    /* Navbar styles */
+    .navbar {
+    background-color: #ff6f61;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+
+    .navbar .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: white;
+    }
+
+    .navbar .logo img {
+        height: 35px;
+        box-shadow: 3px 3px 3px yellow;
+    }
+
+    .navbar .logo span {
+        color: yellow;
+        font-size: 40px;
+        font-style: italic;
+    }
+
+    .navbar .nav-links {
+        list-style: none;
+        display: flex;
+    }
+
+    .navbar .nav-links li {
+        margin-left: 1.5rem;
+    }
+
+    .person {
+        height: 40px;
+        margin-top: -6px;
+    }
+
+    .navbar .nav-links li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+    }
+
+    h1 {
+      color: #4CAF50;
+      text-align: center;
+    }
+
+    h2 {
+      color: #4CAF50;
+    }
+
+    .container {
+      width: 80%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    form input, form textarea, form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    form textarea {
+      resize: none;
+      height: 60px;
+    }
+
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    form button:hover {
+      background-color: #45a049;
+    }
+
+    form button:disabled {
+      background-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .modal .cancel-btn:hover {
+            background: #bbb;
+        }
+
+        .modal .confirm-btn {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .modal .confirm-btn:hover {
+            background: #e65a50;
+        }
+
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+    /* Footer */
+    .footer {
+        background-color: #0056b3;
+        color: white;
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .footer a {
+        color: #ffcc00;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="logo">
+          <img src="images/logo.jpeg" alt="logo">
+          <span>G</span>asBy<span>G</span>as
+      </div>
+      <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="gas_register.html">Request Gas</a></li>
+          <li><a href="notification.html">Notifications</a></li>
+          <li><a href="payment.html">Payment</a></li>
+          <li><a href="token_management.html">Token Management</a></li>
+          <li><a href="help&support.html">Help&Support</a></li>
+          <li><a href="#" id="logout-btn">Logout</a></li>
+          <li><a href="profile_management.html"><img class="person" src="images/man.png" alt=""></a></li>
+      </ul>
+  </nav>
+
+  <div class="container">
+    <h1>My Profile</h1>
+
+    <!-- Personal Details Section -->
+    <section class="personal-details">
+      <h2>Personal Details</h2>
+      <form id="personal-details-form">
+
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" value="John" disabled>
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" value="Doe" disabled>
+
+        <label for="nic">NIC:</label>
+        <input type="text" id="nic" value="93XXXXXXXX" disabled>
+
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" value="+947XXXXXXXX" disabled>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" value="123 Main Street, Colombo" disabled>
+
+        <button type="button" id="edit-details-btn">Edit</button>
+        <button type="button" id="save-details-btn" disabled>Save Changes</button>
+      </form>
+    </section>
+
+    <!-- Password Management Section -->
+    <section class="password-management">
+      <h2>Password Management</h2>
+      <form id="password-form">
+        <label for="current-password">Current Password:</label>
+        <input type="password" id="current-password">
+
+        <label for="new-password">New Password:</label>
+        <input type="password" id="new-password">
+
+        <label for="confirm-password">Confirm New Password:</label>
+        <input type="password" id="confirm-password">
+
+        <button type="button" id="update-password-btn">Update Password</button>
+      </form>
+    </section>
+  </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logout-modal">
+    <div class="modal">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to log out?</p>
+        <div class="modal-buttons">
+            <button class="cancel-btn" id="cancel-logout">Cancel</button>
+            <button class="confirm-btn" id="confirm-logout">Logout</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    //logout
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogout = document.getElementById('cancel-logout');
+    const confirmLogout = document.getElementById('confirm-logout');
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutModal.classList.add('active');
+    });
+
+    cancelLogout.addEventListener('click', () => {
+        logoutModal.classList.remove('active');
+    });
+
+    confirmLogout.addEventListener('click', () => {
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+    // Handle Personal Details Edit and Save
+    const editDetailsBtn = document.getElementById("edit-details-btn");
+    const saveDetailsBtn = document.getElementById("save-details-btn");
+    const personalDetailsInputs = document.querySelectorAll("#personal-details-form input:not(#nic)");
+
+    editDetailsBtn.addEventListener("click", () => {
+      personalDetailsInputs.forEach(input => input.disabled = false);
+      saveDetailsBtn.disabled = false;
+    });
+
+    saveDetailsBtn.addEventListener("click", () => {
+      alert("Details Saved Successfully!");
+      personalDetailsInputs.forEach(input => input.disabled = true);
+      saveDetailsBtn.disabled = true;
+    });
+
+    // Handle Password Update
+    const updatePasswordBtn = document.getElementById("update-password-btn");
+
+    updatePasswordBtn.addEventListener("click", () => {
+      const currentPassword = document.getElementById("current-password").value;
+      const newPassword = document.getElementById("new-password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        alert("Please fill all the password fields.");
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        alert("New passwords do not match!");
+        return;
+      }
+
+      alert("Password Updated Successfully!");
+      document.getElementById("password-form").reset();
+    });
+  </script>
+</body>
+</html>
+

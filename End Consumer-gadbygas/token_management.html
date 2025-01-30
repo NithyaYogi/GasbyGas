@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Management Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #ff6f61;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 35px;
+            box-shadow: 3px 3px 3px yellow;
+        }
+
+        .navbar .logo span {
+            color: yellow;
+            font-size: 40px;
+            font-style: italic;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .person {
+            height: 40px;
+            margin-top: -6px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0072ff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        table th, table td {
+            text-align: left;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #0072ff;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #e0f7fa;
+        }
+
+        .btn {
+            padding: 0.6rem 1rem;
+            background-color: #0072ff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #00c6ff;
+        }
+
+        .btn-cancel {
+            background-color: #ff5252;
+        }
+
+        .btn-cancel:hover {
+            background-color: #ff1744;
+        }
+
+        .reschedule {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .modal .cancel-btn:hover {
+            background: #bbb;
+        }
+
+        .modal .confirm-btn {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .modal .confirm-btn:hover {
+            background: #e65a50;
+        }
+
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+
+        /* Footer */
+        .footer {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="images/logo.jpeg" alt="logo">
+            <span>G</span>asBy<span>G</span>as
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gas_register.html">Request Gas</a></li>
+            <li><a href="notification.html">Notifications</a></li>
+            <li><a href="payment.html">Payment</a></li>
+            <li><a href="token_management.html">Token Management</a></li>
+            <li><a href="help&support.html">Help&Support</a></li>
+            <li><a href="#" id="logout-btn">Logout</a></li>
+            <li><a href="profile_management.html"><img class="person" src="images/man.png" alt=""></a></li>
+        </ul>
+    </nav>
+
+<div class="container">
+    <h2>Token Management</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Token ID</th>
+                <th>Gas Type</th>
+                <th>Quantity</th>
+                <th>Outlet</th>
+                <th>Delivery Period</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="tokenTableBody">
+            <!-- Dynamic rows will be inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal-overlay" id="logout-modal">
+<div class="modal">
+    <h2>Confirm Logout</h2>
+    <p>Are you sure you want to log out?</p>
+    <div class="modal-buttons">
+        <button class="cancel-btn" id="cancel-logout">Cancel</button>
+        <button class="confirm-btn" id="confirm-logout">Logout</button>
+    </div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+    //logout
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogout = document.getElementById('cancel-logout');
+    const confirmLogout = document.getElementById('confirm-logout');
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutModal.classList.add('active');
+    });
+
+    cancelLogout.addEventListener('click', () => {
+        logoutModal.classList.remove('active');
+    });
+
+    confirmLogout.addEventListener('click', () => {
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+    // Example data for tokens
+    const tokens = [
+        {
+            tokenId: 'GAS-001',
+            gasType: '12.5kg',
+            quantity: 2,
+            outlet: 'Outlet 1 - Colombo',
+            startDate: '2025-01-20',
+            endDate: '2025-02-03',
+            status: 'Pending'
+        },
+        {
+            tokenId: 'GAS-002',
+            gasType: '5kg',
+            quantity: 1,
+            outlet: 'Outlet 2 - Kandy',
+            startDate: '2025-01-22',
+            endDate: '2025-02-05',
+            status: 'Confirmed'
+        },
+        {
+            tokenId: 'GAS-003',
+            gasType: '37.5kg',
+            quantity: 1,
+            outlet: 'Outlet 3 - Galle',
+            startDate: '2025-01-25',
+            endDate: '2025-02-08',
+            status: 'Rescheduled',
+            rescheduleReason: 'Weather conditions'
+        },
+        {
+            tokenId: 'GAS-004',
+            gasType: '12.5kg',
+            quantity: 3,
+            outlet: 'Outlet 4 - Jaffna',
+            startDate: '2025-01-18',
+            endDate: '2025-02-01',
+            status: 'Delivered'
+        },
+        {
+            tokenId: 'GAS-002',
+            gasType: '5kg',
+            quantity: 1,
+            outlet: 'Outlet 2 - Kandy',
+            startDate: '2025-01-22',
+            endDate: '2025-02-05',
+            status: 'Confirmed'
+        },
+        {
+            tokenId: 'GAS-005',
+            gasType: '5kg',
+            quantity: 2,
+            outlet: 'Outlet 5 - Matara',
+            startDate: '2025-01-21',
+            endDate: '2025-02-04',
+            status: 'Canceled'
+        },
+        {
+            tokenId: 'GAS-006',
+            gasType: '37.5kg',
+            quantity: 1,
+            outlet: 'Outlet 1 - Colombo',
+            startDate: '2025-01-22',
+            endDate: '2025-02-05',
+            status: 'Pending'
+        },
+        {
+            tokenId: 'GAS-004',
+            gasType: '12.5kg',
+            quantity: 3,
+            outlet: 'Outlet 4 - Jaffna',
+            startDate: '2025-01-18',
+            endDate: '2025-02-01',
+            status: 'Delivered'
+        },
+        {
+            tokenId: 'GAS-007',
+            gasType: '12.5kg',
+            quantity: 1,
+            outlet: 'Outlet 2 - Kandy',
+            startDate: '2025-01-23',
+            endDate: '2025-02-06',
+            status: 'Rescheduled',
+            rescheduleReason: 'Maintenance issues'
+        }
+        
+    ];
+
+    const tokenTableBody = document.getElementById('tokenTableBody');
+
+    // Generate token table rows dynamically
+    function populateTable() {
+        tokenTableBody.innerHTML = '';
+        tokens.forEach(token => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${token.tokenId}</td>
+                <td>${token.gasType}</td>
+                <td>${token.quantity}</td>
+                <td>${token.outlet}</td>
+                <td>${token.startDate} - ${token.endDate}
+                    ${token.status === 'Rescheduled' ? `<br><span class='reschedule'>Reason: ${token.rescheduleReason}</span>` : ''}
+                </td>
+                <td>${token.status}</td>
+                <td>
+                    ${token.status === 'Pending' ? `<button class="btn btn-cancel" onclick="cancelToken('${token.tokenId}')">Cancel</button>` : 'N/A'}
+                </td>
+            `;
+            tokenTableBody.appendChild(row);
+        });
+    }
+
+    // Cancel token functionality
+    function cancelToken(tokenId) {
+        const token = tokens.find(t => t.tokenId === tokenId);
+        if (token) {
+            token.status = 'Canceled';
+            alert(`Token ${tokenId} has been canceled.`);
+            populateTable();
+        }
+    }
+
+    // Initial population of the table
+    populateTable();
+</script>
+
+</body>
+</html>

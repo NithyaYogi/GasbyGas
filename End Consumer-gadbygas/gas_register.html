@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gas Request Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #f1b36c, #e7e299);
+            color: #333;
+        }
+
+                /* Navbar styles */
+                .navbar {
+            background-color: #ff6f61;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .navbar .logo img {
+            height: 35px;
+            box-shadow: 3px 3px 3px yellow;
+        }
+
+        .navbar .logo span {
+            color: yellow;
+            font-size: 40px;
+            font-style: italic;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .person {
+            height: 40px;
+            margin-top: -6px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ff6f61;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        select {
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            color:#726d6d;
+            margin-top: 10px;
+        }
+        input {
+            padding: 0.8rem 0px 0.8rem 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            width: 100%;
+            color:#726d6d;
+            margin-top: 10px;
+        }
+        
+        .checkbox{
+         display:inline-block;
+         width: 2%;
+         margin-top: 10px;
+         margin-bottom: 15px;
+        }
+
+        input::placeholder, select::placeholder {
+            color: #726d6d;
+        }
+        .bar:not(:placeholder-shown) {
+            color: black;
+        }
+        
+        select{
+            background-color: #fff;
+        }
+
+        input:focus, select:focus {
+            border-color: #f51e17;
+            outline: none;
+            color: #000;
+        }
+        input:hover, select:hover{
+            box-shadow: 5px 5px 5px rgba(121, 33, 33, 0.2);
+        }
+        .terms{
+            display: inline-block
+        }
+        .button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        button {
+            padding: 0.8rem 20% 0.8rem 20%;
+            background: #f54131;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .checkAvailability{
+            padding: 0.8rem;
+            background: #5755e7;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .checkAvailability:hover {
+            background: #00c6ff;
+        }
+        button:hover {
+            background: #f57f70;
+        }
+
+        #requestSummary h2 {
+            margin-top: 0;
+            color: #0072ff;
+            text-align: center;
+        }
+
+        #summaryDetails {
+            margin: 1rem 0;
+            line-height: 40px;
+            color: #333;
+        }
+
+        .btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.8rem;
+        }
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        .features a {
+        text-decoration: none;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .features .feature-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .features .feature-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .features .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .features .feature-item h3 {
+            font-size: 1.5rem;
+            color: #0056b3;
+        }
+
+        .features .feature-item p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        /* Modal Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            color: #ff6f61;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .modal .modal-buttons {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal .cancel-btn {
+            background: #ddd;
+            color: #333;
+        }
+
+        .modal .cancel-btn:hover {
+            background: #bbb;
+        }
+
+        .modal .confirm-btn {
+            background: #ff6f61;
+            color: white;
+        }
+
+        .modal .confirm-btn:hover {
+            background: #e65a50;
+        }
+
+        @keyframes fadeIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0056b3;
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <img src="images/logo.jpeg" alt="logo">
+        <span>G</span>asBy<span>G</span>as
+    </div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gas_register.html">Request Gas</a></li>
+        <li><a href="notification.html">Notifications</a></li>
+        <li><a href="payment.html">Payment</a></li>
+        <li><a href="token_management.html">Token Management</a></li>
+        <li><a href="help&support.html">Help&Support</a></li>
+        <li><a href="#" id="logout-btn">Logout</a></li>
+        <li><a href="profile_management.html"><img class="person" src="images/man.png" alt=""></a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Gas Request Form</h1>
+    <form id="gasRequestForm">
+        <div>
+            <label for="outlet">Nearest Outlet</label><br>
+            <select id="outlet" name="outlet" required>
+                <option value="">Select Nearest Outlet</option>
+                <option value="Outlet 1 - Colombo">Outlet 1 - Colombo</option>
+                <option value="Outlet 2 - Kandy">Outlet 2 - Kandy</option>
+                <option value="Outlet 3 - Galle">Outlet 3 - Galle</option>
+                <option value="Outlet 4 - Anuradhapura">Outlet 4 - Anuradhapura</option>
+                <option value="Outlet 5 - Kegalle">Outlet 5 - Kegalle</option>
+                <option value="Outlet 6 - Matale">Outlet 6 - Matale</option>
+                <option value="Outlet 7 - Jaffna">Outlet 7 - Jaffna</option>
+                <option value="Outlet 8 - Nuwara Eliya">Outlet 8 - Nuwara Eliya</option>
+                <option value="Outlet 9 - Trincomalee">Outlet 9 - Trincomalee</option>
+                <option value="Outlet 10 - Vavuniya">Outlet 10 - Vavuniya</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="cylinderType">Gas Cylinder Type/Size</label><br>
+            <select id="cylinderType" name="cylinderType" required>
+                <option value="">Select Cylinder Type</option>
+                <option value="5kg">5kg - Rs. 1500</option>
+                <option value="12.5kg">12.5kg - Rs. 3000</option>
+                <option value="37.5kg">37.5kg - Rs. 8500</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="quantity">Quantity</label><br>
+            <input type="number" class="bar" id="quantity" name="quantity" min="1" max="5" placeholder="Enter quantity (max 5)" required>
+        </div>
+
+        <div>
+            <label for="pickupDate">Preferred Pickup Date</label><br>
+            <input class="bar" type="date" id="pickupDate" name="pickupDate" placeholder="DD/MM/YYYY" required>
+        </div>
+
+        <div>
+            <input class="checkbox" type="checkbox" id="terms" name="terms" required> 
+            <label for="terms">I agree to the reallocation policy </label>
+        </div>
+
+        <div>
+            <button class="checkAvailability" type="button" id="checkAvailability">Check Availability</button>
+            <p class="error" id="availabilityError"></p>
+        </div>
+
+        <div class="button">
+            <button type="submit">Submit</button>
+            <button type="reset">Cancel</button>
+        </div>
+
+        <div id="requestSummary" style="display:none;">
+            <h2>Request Summary</h2>
+            <p id="summaryDetails"></p>
+            <button class="btn" onclick="printToken()">Print Token</button>
+        </div>
+    </form>
+</div>
+
+<!-- Logout Confirmation Modal -->
+<div class="modal-overlay" id="logout-modal">
+    <div class="modal">
+        <h2>Confirm Logout</h2>
+        <p>Are you sure you want to log out?</p>
+        <div class="modal-buttons">
+            <button class="cancel-btn" id="cancel-logout">Cancel</button>
+            <button class="confirm-btn" id="confirm-logout">Logout</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 GasByGas. All rights reserved. | <a href="privacy_policy.html">Privacy Policy</a></p>
+</footer>
+
+<script>
+    //logout
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutModal = document.getElementById('logout-modal');
+    const cancelLogout = document.getElementById('cancel-logout');
+    const confirmLogout = document.getElementById('confirm-logout');
+
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoutModal.classList.add('active');
+    });
+
+    cancelLogout.addEventListener('click', () => {
+        logoutModal.classList.remove('active');
+    });
+
+    confirmLogout.addEventListener('click', () => {
+        alert('You have been logged out.');
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+        
+    const form = document.getElementById('gasRequestForm');
+    const availabilityError = document.getElementById('availabilityError');
+    const summaryDetails = document.getElementById('summaryDetails');
+    const requestSummary = document.getElementById('requestSummary');
+
+    const cylinderPrices = {
+        '5kg': 1500,
+        '12.5kg': 3000,
+        '37.5kg': 8500
+    };
+
+    document.getElementById('checkAvailability').addEventListener('click', function () {
+        const outlet = document.getElementById('outlet').value;
+        const pickupDate = document.getElementById('pickupDate').value;
+
+        if (!outlet || !pickupDate) {
+            availabilityError.textContent = 'Please select an outlet and pickup date.';
+            return;
+        }
+
+        // Simulate stock checking logic
+        if (outlet === 'Outlet 1 - Colombo' && pickupDate) {
+            availabilityError.textContent = '';
+            alert('Stock available! Proceed with your request.');
+        } else {
+            availabilityError.textContent = 'Stock unavailable for the selected date and outlet.';
+        }
+    });
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const outlet = document.getElementById('outlet').value;
+        const cylinderType = document.getElementById('cylinderType').value;
+        const quantity = parseInt(document.getElementById('quantity').value);
+        const pickupDate = document.getElementById('pickupDate').value;
+
+        if (!outlet || !cylinderType || !quantity || !pickupDate) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        const tokenNumber = 'GAS-' + Math.floor(100000 + Math.random() * 900000);
+        const startDate = new Date(pickupDate);
+        const endDate = new Date(pickupDate);
+        endDate.setDate(endDate.getDate() + 14);
+
+        const totalAmount = cylinderPrices[cylinderType] * quantity;
+
+        summaryDetails.innerHTML = `
+            <strong>Token Number:</strong> ${tokenNumber}<br>
+            <strong>Outlet:</strong> ${outlet}<br>
+            <strong>Cylinder Type:</strong> ${cylinderType}<br>
+            <strong>Quantity:</strong> ${quantity}<br>
+            <strong>Pickup Date:</strong> ${pickupDate}<br>
+            <strong>Estimated Delivery Period:</strong> ${startDate.toDateString()} - ${endDate.toDateString()}<br>
+            <strong>Total Amount:</strong> Rs. ${totalAmount}
+        `;
+
+        requestSummary.style.display = 'block';
+        alert(`Request Submitted! Your Token ID is: ${tokenNumber}`);
+
+        form.reset();
+    });
+
+    // Print token
+    function printToken() {
+    window.print();
+}
+</script>
+
+</body>
+</html>
